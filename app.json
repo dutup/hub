@@ -31,6 +31,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "30add3bd-023c-446a-a109-98802ada4911"
+      }
+    },
+    "owner": "qtvhao"
   }
 }
