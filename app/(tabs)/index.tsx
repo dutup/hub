@@ -4,8 +4,15 @@ import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { WebView } from 'react-native-webview';
+import React, { useState } from 'react';
+import { Button } from 'react-native';
 
 export default function HomeScreen() {
+  const [url, setUrl] = useState(null);
+  const loadUrl = (selectedUrl) => {
+    setUrl(selectedUrl);
+  };
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -15,6 +22,27 @@ export default function HomeScreen() {
           style={styles.reactLogo}
         />
       }>
+      <ThemedView style={styles.buttonContainer}>
+        <Button title="YouTube" onPress={() => loadUrl('https://www.youtube.com/')} />
+        <Button title="Netflix" onPress={() => loadUrl('https://www.netflix.com/')} />
+        <Button title="IMDB" onPress={() => loadUrl('https://www.imdb.com/')} />
+        {url && (
+        <>
+          <ThemedView style={styles.urlContainer}>
+            <ThemedText>Current URL: {url}</ThemedText>
+          </ThemedView>
+        </>
+      )}
+      </ThemedView>
+      {Platform.OS === 'web' ? (
+        <iframe src={url} />
+      ) : (
+        <WebView
+          source={{ uri: url }}
+          style={styles.webview}
+          onNavigationStateChange={(navState) => setUrl(navState.url)}
+        />
+      )}
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Welcome!</ThemedText>
         <HelloWave />
