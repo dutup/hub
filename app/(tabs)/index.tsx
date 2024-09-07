@@ -7,35 +7,38 @@ import { ThemedView } from '@/components/ThemedView';
 import { WebView } from 'react-native-webview';
 import React, { useState } from 'react';
 import { Button } from 'react-native';
+import { Dimensions } from 'react-native';
 
 export default function HomeScreen() {
   const [url, setUrl] = useState(null);
   const loadUrl = (selectedUrl) => {
     setUrl(selectedUrl);
   };
+  const viewport = Dimensions.get('window');
+  const [width, height] = [viewport.width, viewport.height];
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
+    <>
+        <ThemedView>
+        https://chromewebstore.google.com/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe
+        </ThemedView>
       <ThemedView style={styles.buttonContainer}>
         <Button title="YouTube" onPress={() => loadUrl('https://www.youtube.com/')} />
+        </ThemedView>
+        <ThemedView style={styles.buttonContainer}>
         <Button title="Netflix" onPress={() => loadUrl('https://www.netflix.com/')} />
-        <Button title="IMDB" onPress={() => loadUrl('https://www.imdb.com/')} />
-        {url && (
+        </ThemedView>
+        <ThemedView style={styles.buttonContainer}>
+          <Button title="IMDB" onPress={() => loadUrl('https://www.imdb.com/')} />
+        </ThemedView>
+      {url && (
         <>
           <ThemedView style={styles.urlContainer}>
             <ThemedText>Current URL: {url}</ThemedText>
           </ThemedView>
         </>
       )}
-      </ThemedView>
       {Platform.OS === 'web' ? (
-        <iframe src={url} />
+        <iframe src={url} height={height} width={width} />
       ) : (
         <WebView
           source={{ uri: url }}
@@ -47,17 +50,7 @@ export default function HomeScreen() {
         <ThemedText type="title">Welcome!</ThemedText>
         <HelloWave />
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
+      {/*  */}
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 2: Explore</ThemedText>
         <ThemedText>
@@ -74,7 +67,7 @@ export default function HomeScreen() {
           <ThemedText type="defaultSemiBold">app-example</ThemedText>.
         </ThemedText>
       </ThemedView>
-    </ParallaxScrollView>
+    </>
   );
 }
 
