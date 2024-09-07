@@ -38,7 +38,9 @@ export default function HomeScreen() {
         </>
       )}
       {Platform.OS === 'web' ? (
-        <iframe src={url} height={height} width={width} />
+        <iframe src={url}
+        onLoad={(e) => setUrl(e.target.contentWindow.location.href)}
+        height={height} width={width} />
       ) : (
         <WebView
           source={{ uri: url }}
